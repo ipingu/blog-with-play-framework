@@ -1,0 +1,124 @@
+Grab Play! framework @ playframework.org, and unzip it somewhere. On Unix, making a link to the play executable is useful. It should be something like "ln -s /home/dev/where-you-unzip-it/play /usr/local/bin/play".
+
+The first step is to choose a cool name for your new application, let's rock for "blog-app". The next few steps are fast and will create a nice development environment.
+
+Generate project sources and files structure :
+ x play new blog-app
+
+A new directory "blog-app" has been created, containing many files :
+
+	|-- app
+	|   |-- controllers
+	|   |-- models
+	|   `-- views
+	|       |-- Application
+	|       `-- errors
+	|-- conf
+	|-- eclipse
+	|   `-- classes
+	|       |-- controllers
+	|       `-- models
+	|-- lib
+	|-- logs
+	|-- public
+	|   |-- images
+	|   |-- javascripts
+	|   `-- stylesheets
+	`-- test
+
+
+It is always preferable to keep your files on a version control system. As Git is powerful and Github.com provides a very nice support of Git, I could not recommend more to manage your sources with it. For those who already have a github account, just create a new repository. For this tutorial, I have created a repository named "blog-with-play-framework". In one minute, the project will be managed by Git.
+
+x cd blog-app
+x git init
+x git remote add origin http://github.com/ipingu/blog-with-play-framework
+x git add *
+x git commit -m "Project skeleton"
+x git push origin master
+
+Your newly created files are now copied on a distant place. Good to feel in security, no ? Github offers a web access on those files at http://github.com/ipingu/blog-with-play-framework.
+
+Play provides a nice integration with Eclipse IDE, as with Netbeans or IDEA. Depends on your prefered IDE, use one of those three commands line :
+x play eclipsify
+x play idealize
+x play netbeansify
+
+Then, import your project on your IDE and it shoulds works perfectly. For Eclipse, three launchers are created (one for development environment, one for debug and the last for launching all tests).
+I don't know for others IDE. As I don't want to rely on any IDE for this tutorial, I will only [command play]
+
+Checking everything works well ?
+
+This command will launch the server environment, and deploy your app on it. By default, port 9000 on localhost is used. If a green page with an heart for favicon is accessible, then it's well working, congratulations !
+
+x play run
+
+Next target ? Google App Engine. How to deploy a fresh Play! application on GAE and use the datastore engine ?
+
+Many modules are available for Play! framework to enhance its abilities. Fortunately, module for deploying on GAE exists and you will see it is very easy and handy to benefits of GAE cloud.
+
+The command play list-modules displays registered modules on the play "marketplace". With the command play install, it comes very easy to add new features to your application.
+
+x play list-modules
+
+Two modules interests us :
+
+~ [gae]
+~   Google App Engine
+~   http://www.playframework.org/modules/gae
+~   Versions: 1.0, 1.0.1, 1.0.2
+
+~ [siena]
+~   Siena
+~   http://www.playframework.org/modules/siena
+~   Versions: 1.0, 1.1
+
+Let's install them.
+
+x play install gae 1.0.2
+x play install siena 1.1
+
+When a module is installed, it is installed in where-you-decompressed-play-framework/modules/ folder. By default, a new project don't use any additionnal module. It is necessary to configure your project so your execution environment will [prendre en compte]. This is done in the conf/application.conf file.
+
+Add those two lines (one for each installed modules)
+
+module.gae=${play.path}/modules/gae-1.0.2
+module.siena=${play.path}/modules/siena-1.1
+
+Now, when you'll try to launch your application, you should see activated modules :
+
+Module siena is available (/home/mad/coding/libs/play-1.0.3/modules/siena-1.1)
+Module gae is available (/home/mad/coding/libs/play-1.0.3/modules/gae-1.0.2)
+
+At the first application launch with GAE module, a blank appengine-web.xml has been created in the war/WEB-INF directory. Configure it regarding your GAE account. In this tutorial case, this is the result.
+
+An application deployment on GAE required you precompile classes, otherwise you will get some "Uncaught exception from servlet java.lang.RuntimeException : Cannot load precompiled template" exceptions.
+The command play precompile will compile controllers, models and templates files to the precompiled repository. To precompile classes before deployement is also a good option to do if you want a faster startup of your application.
+
+play precompile
+
+To build a war that will works a servlet container or on GAE environment, the command play war exists. The -o option stands for the output destination file.
+
+play war -o /tmp/blog-app.war
+
+The appcfg.sh script is present in bin repository of the GAE SDK. Download it if not done yet.
+
+appcfg.sh update /tmp/blog-app.war
+
+Check your application at the url given by GAE, in our case http://play-elsewhere.appspot.com/. (GAE offers the ability to see previous version of your deployed application: the application at this stage of tutorial may be accessible at http://1.latest.play-elsewhere.appspot.com/). If you see the message Your application is ready!, the deployement worked ! 
+
+Time to commit !
+
+git add war/WEB-INF/appengine-web.xml
+git commit -m "deployment on GAE works"
+
+
+
+Ok ! We now have a working development and execution environment, time has come to finally customize our application ! Our next steps ?
+
+ - use the design layer we have build when we were learning HTML 5, and discover how templates works in Play!
+ - build our first functional brick, a simple post publisher and its CRUD secure area.
+ - add http://disqus.com/ support to offer post commenting abilities.
+ - large content storing on GAE datastore for pictures book module.
+ - take a diserved break.
+
+
