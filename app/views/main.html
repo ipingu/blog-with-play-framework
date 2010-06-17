@@ -1,16 +1,41 @@
-<!DOCTYPE html>
-
-<html>
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+<html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>#{get 'title' /}</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}">
-        #{get 'moreStyles' /}
+        <meta name="robot" content="index, follow" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en" />
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/blueprint.css'}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/screen.css'}">
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
         <script src="@{'/public/javascripts/jquery-1.4.2.min.js'}" type="text/javascript" charset="utf-8"></script>
-        #{get 'moreScripts' /}
     </head>
-    <body>
-        #{doLayout /}
+    <body>       
+        <div class="container">
+        	<!-- Header banner + logo -->
+			#{include 'header.html' /}
+
+		<hr class="space" />
+
+		<div class="span-17 append-1">
+			<!-- Main content -->
+			#{doLayout /}
+		</div>
+
+		<!-- Side content -->
+		<div class="span-6 last" id="sidebar">
+			#{include 'sidebar.html' /}			
+		</div>
+	</div>
+	
+	<hr class="space" />
+	<hr class="space" />
+
+	<!-- Footer -->
+	#{include 'footer.html' /}
+	        
     </body>
 </html>

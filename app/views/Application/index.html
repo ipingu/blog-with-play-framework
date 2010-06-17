@@ -1,4 +1,55 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
 
-#{welcome /}
+<div class="box" id="content">
+	<h2>Maven integration with GWT</h2>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a odio felis. Nullam accumsan neque enim. Curabitur laoreet, arcu ac mollis malesuada, lectus odio viverra nunc, vel commodo quam eros vel eros. Aenean eros urna, tristique ac pellentesque vel, fringilla non mi. Duis sem lorem, tincidunt ac pharetra pretium, cursus in mauris. Suspendisse vitae lacus felis. Maecenas vel elit erat. Quisque massa ligula, pellentesque a porttitor a, pulvinar ac odio. Nunc eros quam, aliquam eu accumsan quis, viverra non massa. Aliquam vestibulum laoreet elit, vel pretium arcu mattis ut. Etiam viverra elementum adipiscing. Mauris vitae velit sed nisi eleifend molestie. Quisque non ligula vitae purus venenatis porttitor eu interdum metus. Aenean varius massa id elit condimentum at consectetur odio aliquam. In ac diam dignissim nulla feugiat ornare. Nunc luctus nunc hendrerit libero rutrum ultrices. Praesent lorem felis, varius id tincidunt at, feugiat sed lectus. Integer neque nulla, congue nec imperdiet dapibus, varius et urna. Integer id arcu quis mauris bibendum tincidunt vitae vitae diam. Pellentesque semper augue at nibh auctor et gravida erat vehicula.</p>
+	<p>Aenean rhoncus mollis sodales. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus nibh quam, viverra sed pharetra a, dignissim vel lectus. Nullam ligula metus, consequat eget aliquam non, ullamcorper a massa. Nam tortor mi, iaculis sed tristique nec, vulputate sit amet quam. Nunc ornare nisl a leo fringilla varius. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus imperdiet, turpis vel cursus mattis, lorem tellus commodo nibh, et condimentum nulla mauris et nulla. Cras et feugiat sapien. Maecenas ullamcorper euismod ante vitae cursus. Praesent viverra interdum aliquet. Sed consequat posuere lorem, quis consequat tellus interdum a. Integer auctor, urna id tempus porttitor, mi mauris hendrerit purus, vitae condimentum lectus arcu sit amet purus. Nulla vitae interdum orci. Cras fringilla adipiscing ultricies. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce nec dui justo, id fringilla quam. Morbi lobortis orci sed elit ornare dignissim. Suspendisse potenti.</p>
+	<p>Pellentesque nisi urna, ullamcorper sit amet interdum vitae, sodales in lectus. Nulla eleifend pretium pharetra. Nunc eleifend lacus id velit condimentum ornare. Pellentesque non massa sit amet diam aliquam convallis at sed ligula. Aliquam lacinia tellus a sapien lobortis ultricies. Duis pulvinar laoreet bibendum. Vivamus dapibus ultrices ligula, at condimentum tellus faucibus et. Morbi volutpat lorem arcu, nec dictum neque. Mauris quis turpis nec mauris imperdiet vehicula. Nullam risus mi, cursus a suscipit ut, hendrerit sit amet metus. 
+	</p>
+
+	<hr class="space" />
+	
+	<h2>Discussion</h2>
+	<div class="comment">
+		<h5>the 8/10/2010 @ 10:23, terry said</h5>
+		<img class="image-left frame" src="http://www.gravatar.com/avatar/99c2c442090782f65a205e7858b44f67.png" width="60px" height="60px" alt="me" />
+		<p>Pellentesque nisi urna, ullamcorper sit amet interdum vitae, sodales in lectus. Nulla eleifend pretium pharetra. Nunc eleifend lacus id velit condimentum ornare. Pellentesque non massa sit amet diam aliquam convallis at sed ligula. Aliquam lacinia tellus a sapien lobortis ultricies. Duis pulvinar laoreet bibendum. Vivamus dapibus ultrices ligula, at condimentum tellus faucibus et. Morbi volutpat lorem arcu, nec dictum neque. Mauris quis turpis nec mauris imperdiet vehicula. Nullam risus mi, cursus a suscipit ut, hendrerit sit amet metus. 
+		</p>
+	</div>
+	<div class="comment">
+		<h5>the 8/10/2010 @ 10:52, bob said</h5>
+		<img class="image-left frame" src="http://www.gravatar.com/avatar/99c2c442090782f65a205e7858b44f67.png" width="60px" height="60px" alt="me" />
+		<p>Pellentesque nisi urna, ullamcorper sit amet interdum vitae, sodales in lectus. Nulla eleifend pretium pharetra. Nunc eleifend lacus id velit condimentum ornare. Pellentesque non massa sit amet diam aliquam convallis at sed ligula. Aliquam lacinia tellus a sapien lobortis ultricies. Duis pulvinar laoreet bibendum. Vivamus dapibus ultrices ligula, at condimentum tellus faucibus et. Morbi volutpat lorem arcu, nec dictum neque. Mauris quis turpis nec mauris imperdiet vehicula. Nullam risus mi, cursus a suscipit ut, hendrerit sit amet metus. 
+		</p>
+	</div>
+	
+	<hr class="space" />
+	
+	<fieldset>
+		<legend>Participate</legend>
+
+		<form action="#" method="post">
+			<ul class="formulaire">
+				<li>
+					<input type="text" class="text" id="name" name="name" />
+					<label class="right" for="name">Name</label>
+				</li>
+				<li>
+					<input type="text" class="text" id="email" name="email" />
+					<label class="right" for="email">Email (will not be displayed)</label>
+				</li>
+				<li>
+					<input type="text" class="text" id="website" name="website" />
+					<label class="right optional" for="website">Website</label>
+				</li>
+				<li>
+					<textarea rows="6" cols="80" name="comment"></textarea>
+				</li>
+				<li>
+					<input type="submit" value="Submit me" />
+				</li>
+			</ul>
+		</form>
+	</fieldset>
+</div>
+
