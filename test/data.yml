@@ -5,3 +5,9 @@
 #   email: bob@gmail.com
 #   password: secret
 #   fullname: Bob
+
+Category(1):
+ name: development
+
+Category(2):
+ name: miscellaneous
