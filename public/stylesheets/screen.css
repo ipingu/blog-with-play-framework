@@ -72,6 +72,10 @@ ul.navigation a:hover {
 	color: black;
 }
 
+#sidebar {
+	min-height: 600px;
+}
+
 #sidebar h2 {
 	text-align: left;
 }
@@ -95,7 +99,7 @@ ul.navigation a:hover {
 	background-image: url(/public/images/photo-icon.png);
 }
 
-#content {
+.content {
 	background-color: white;
 	text-align: justify;
 }

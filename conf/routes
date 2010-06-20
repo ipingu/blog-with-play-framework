@@ -3,7 +3,11 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.index
+GET     /                                       Blog.all
+GET		/blog									Blog.all
+GET		/development							Blog.category(categoryId:'1')
+GET		/miscellaneous							Blog.category(categoryId:'2')
+GET		/category/{categoryId}					Blog.category
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public

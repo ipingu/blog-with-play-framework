@@ -1,0 +1,10 @@
+Category(1):
+ name: development
+
+Category(2):
+ name: miscellaneous
+
+Post(1):
+ title: Hello World !
+ category: 1
+ content: Lorem Ipsum
