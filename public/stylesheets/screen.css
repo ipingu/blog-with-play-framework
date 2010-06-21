@@ -27,6 +27,10 @@ h2 {
 	border-bottom: 1px solid #A9A9A9;
 }
 
+h2 a {
+	font-weight: normal;
+}
+
 ul {
 	margin: 0;
 	padding: 0;

@@ -8,6 +8,9 @@ GET		/blog									Blog.all
 GET		/development							Blog.category(categoryId:'1')
 GET		/miscellaneous							Blog.category(categoryId:'2')
 GET		/category/{categoryId}					Blog.category
+GET		/blog/{title}							Blog.showPost
+GET		/blog/admin/write						Blog.showWriteForm
+POST	/blog/admin/insert						Blog.insert
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public

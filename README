@@ -104,6 +104,8 @@ The appcfg.sh script is present in bin repository of the GAE SDK. Download it if
 
 appcfg.sh update /tmp/blog-app.war
 
+Update : play gae:deploy --gae /path-to-gae-sdk
+
 Check your application at the url given by GAE, in our case http://play-elsewhere.appspot.com/. (GAE offers the ability to see previous version of your deployed application: the application at this stage of tutorial may be accessible at http://1.latest.play-elsewhere.appspot.com/). If you see the message Your application is ready!, the deployement worked ! 
 
 Time to commit !
@@ -112,11 +114,56 @@ git add war/WEB-INF/appengine-web.xml
 git commit -m "deployment on GAE works"
 
 
+Ok ! We now have a working development and execution environment, time has come to finally customize our application ! Next step is to use the design layer we have build when we were learning HTML 5.
 
-Ok ! We now have a working development and execution environment, time has come to finally customize our application ! Our next steps ?
+First, take a look at app/views/Application/index.html. We are gonna tweak this file.
 
- - use the design layer we have build when we were learning HTML 5, and discover how templates works in Play!
- - build our first functional brick, a simple post publisher and its CRUD secure area.
+Play templates supports inheritance and inclusion: it allows to separate content in multiple files for the sake of clarity and reusability. Typically, a webpage could be divided in four parts (at least in our example) :
+ - a header -> header.html
+ - a footer -> footer.html
+ - a sidebar -> sidebar.html
+ - a content area -> content.html
+
+Each part will be a distinct template, and a root template (main.html) will compose our four templates. The template tag #{include 'name.html' /} is used for template inclusion.
+
+In main.html, there is special tag : {doLayout /}. When used, this tag allows inheritance. Each template which inherits main.html will have its content display in place of the doLayout tag. To inherit a template, use #{extends 'main.html' /} at the top of the template file.
+
+For an exhaustive list of existing tags, take a look at http://www.playframework.org/documentation/1.0.3/tags. And for what you can do in Java in templates files, it is @ http://www.playframework.org/documentation/1.0.3/javaextensions.
+
+The design is now basically integrated, it is sufficient for now. You will discover more on templates development in next lines.
+
+Time has come to start Java development : the first module we are gonna build is the post & comments functionnality. It will be really easy as you will see. As I planned to use Disqus.com to manage comments, I just want a system to manage categories and posts.
+
+So let's start by coding the model, two basic classes are needed, Category and Post. Take care of using annotations from siena package, and not from javax.api.
+When Siena is used with Play!, it is required to extend Siena.Model class, as Play will perform a search for classes extending this class at persistence manager installation. But when not used with Play!, extending this class offers you facilities to manage entities (method update, save, insert are inherited). Otherwise, you would use the entity manager to do those actions.
+GAE only supports Long attribute for entities identifiers.
+With thoses classes added in models package, next time you run the application a directory will be created in war/WEB-INF/appengine-generated. I hope so, I add problems for generating my schema...
+To insert data in the DDB, we create a Job class which will be called at the application start phase.
+
+Create a class named LoadDataset which extends Play.jobs.Job class and annotate it with @OnApplicationStart. Override the doJob() method, instanciates some objects and save them using insert() method on those objects.
+
+We are ready for the first development iteration :
+ x when I click to the banner, I want to display all of my blog posts.
+ x modify the template to add a link to @{Blog.all}, where blog is the name of the controller, and all the name of the method.
+ x refresh your page, an error occurs : the controller Blog does not exists. In package controllers, create a class name Blog which extends Controller.
+ x refresh your page, an error occurs : the method all() does not exists. In class Blog, create a empty static method named all() that returns void. Every controller methods should have this signature, only the method name and parameters can change.
+ x refresh your page, and click on the banner. An empty page is displayed. It is normal, the method all() does not specify which view to display after execution. In the body method, just add a call to method render(). This method is inherited from Controller class and renders the default method view, which in this case would be a file named all.html in the folder views/Blog.
+ x refresh your page, and click on the banner. An error occurs : the page views/Blog/all.html does not exist. Create it, make it extends main.html so when rendered, this template will also display the header, fooder and sidebar.
+ x refresh your page, and click on the banner. Cool, no errors, but still no posts. That is because we never query the datastore. Add List<Post> allPosts = Post.all().fetch(); before rendering. To make this list available to the template, pass in the render arguments : renderArgs.put("posts", allPosts);. Then, tweak the template to iterate over this list :
+	#{list items:posts, as:'post'}
+		<div class="box" class="content">
+			<h2>${post.title}</h2>
+			<span>${post.content}</span>
+			
+			<hr class="space" />
+		</div>
+	#{/list}
+ x refresh your page, you can now smile.
+
+Shame on me, I have skipped unit testing. I will cover this in the next module development, the picture manager. I just want this blog functionnality developped as fast as possible, so this tutorial could be online in less time.
+
+
+
  - add http://disqus.com/ support to offer post commenting abilities.
  - large content storing on GAE datastore for pictures book module.
  - take a diserved break.

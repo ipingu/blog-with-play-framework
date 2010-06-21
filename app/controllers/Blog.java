@@ -4,6 +4,9 @@ import java.util.List;
 
 import models.Category;
 import models.Post;
+import play.Logger;
+import play.data.validation.Required;
+import play.data.validation.Validation;
 import play.mvc.Controller;
 import siena.Model;
 import siena.Query;
@@ -34,7 +37,39 @@ public class Blog extends Controller {
 		} else {
 			notFound();
 		}
+	}
+	
+	/**
+	 * Displays one unique blog post. It uses the url title after slugification
+	 *  (replacing spaces with "-" )
+	 */
+	public static void showPost(String urlTitle) {
+		Post post = Post.all().filter("urlTitle", urlTitle).get();
+		renderArgs.put("post", post);
 		
+		render();
+	}
+	
+	/**
+	 * Displays a form for inserting a new post.
+	 */
+	public static void showWriteForm() {
+		render();
+	}
+	
+	public static void insert(String title, String content) {
+		// check if form was filled with correct values
+		validation.required(title);
+		validation.required(content);
+		
+		if (validation.hasErrors()) {
+			params.flash();
+			validation.keep();
+			showWriteForm();
+		} else {
+			Post post = Post.insertPost(title, content);
+			showPost(title);
+		}
 	}
 	
 }
