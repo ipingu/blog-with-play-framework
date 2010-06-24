@@ -24,10 +24,10 @@ public class Blog extends Controller {
 	}
 	
 	/**
-	 * Displays all post of a specific category.
+	 * Displays all posts of a specific category.
 	 */
-	public static void category(Long categoryId) {
-		Category category = Category.get(categoryId);
+	public static void category(String name) {
+		Category category = Category.getByName(name);
 		
 		if (category != null) {
 			List<Post> postsFromCategory = Post.all().filter("category", category).fetch();
@@ -43,8 +43,8 @@ public class Blog extends Controller {
 	 * Displays one unique blog post. It uses the url title after slugification
 	 *  (replacing spaces with "-" )
 	 */
-	public static void showPost(String urlTitle) {
-		Post post = Post.all().filter("urlTitle", urlTitle).get();
+	public static void showPost(String url) {
+		Post post = Post.getByUrl(url);
 		renderArgs.put("post", post);
 		
 		render();
@@ -57,18 +57,21 @@ public class Blog extends Controller {
 		render();
 	}
 	
-	public static void insert(String title, String content) {
+	public static void insert(String title, String content, String category) {
 		// check if form was filled with correct values
 		validation.required(title);
 		validation.required(content);
+		
+		Category cat = Category.get(Long.parseLong(category));
+		validation.required(cat);
 		
 		if (validation.hasErrors()) {
 			params.flash();
 			validation.keep();
 			showWriteForm();
 		} else {
-			Post post = Post.insertPost(title, content);
-			showPost(title);
+			Post post = Post.insertPost(title, content, cat);
+			showPost(post.getUrl());
 		}
 	}
 	

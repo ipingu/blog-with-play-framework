@@ -29,21 +29,6 @@ public class Post extends Model {
 	
 	@NotNull @Max(0)
 	public String content;
-	
-	@NotNull
-	public String urlTitle;
-
-	@Override
-	public void insert() {
-		this.urlTitle = play.templates.JavaExtensions.slugify(title);
-		super.insert();
-	}
-	
-	@Override
-	public void update() {
-		this.urlTitle = play.templates.JavaExtensions.slugify(title);
-		super.update();
-	}
 
 	public static Query<Post> all() {
 		return Model.all(Post.class);
@@ -53,18 +38,44 @@ public class Post extends Model {
 		return Post.all().count();
 	}
 	
+	public static Post getById(Long id) {
+		return all().filter("id", id).get();
+	}
+	
+	/**
+	 * Returns a post by its slugified title.
+	 * 
+	 * @param title the slugified title is completed by the post id
+	 * @return
+	 */
+	public static Post getByUrl(String title) {
+		int tokenIndex = title.lastIndexOf("-");
+		
+		if (tokenIndex < 0) {
+			return null;
+		}
+		
+		String id = title.substring(tokenIndex + 1, title.length());
+		return Post.getById(Long.parseLong(id));
+	}
+	
+	public static Post insertPost(String title, String content, Category category) {
+		Post post = new Post();
+		post.title = title;
+		post.content = content;
+		post.category = category;
+		post.insert();
+		
+		return post;
+	}
+	
 	@Override
 	public String toString() {
 		return id.toString();
 	}
 	
-	public static Post insertPost(String title, String content) {
-		Post post = new Post();
-		post.title = title;
-		post.content = content;
-		post.insert();
-		
-		return post;
+	public String getUrl() {
+		return play.templates.JavaExtensions.slugify(title) + "-" + this.id;
 	}
 	
 }

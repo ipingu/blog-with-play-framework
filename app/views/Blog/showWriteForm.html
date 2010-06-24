@@ -4,19 +4,35 @@
 <fieldset>
 	<legend>Write a new post</legend>
 	#{ifErrors}
-		<p>errors W${error}</p>
+		<p class="error">There are errors in the form. Please correct them and submit the form again.</p>
 	#{/ifErrors}
+	
 	#{form @Blog.insert()}
 
 	<ul class="formulaire">
 		<li>
 			<input type="text" class="text" id="title" name="title" value="${flash.title}" />
-			<label class="right" for="title">Title</label>  #{error 'title' /}
-			
+			<label class="right" for="title"><span#{ifError 'title'} class="error"#{/ifError}>Title</span></label>
 		</li>
+		
 		<li>
-			<textarea rows="6" cols="80" name="content">${flash.content}</textarea> 
-			#{error 'content' /}
+			<select name="category">
+				#{list items:models.Category.all().fetch(), as:'category'}
+					#{if flash.category == category.id}
+						<option value="${category.id}" selected>${category.name}</option>
+					#{/if}
+					#{if flash.category != category.id}
+						<option value="${category.id}">${category.name}</option>
+					#{/if}
+				#{/list}
+			</select>
+			<label class="right" for="category"><span#{ifError 'category'} class="error"#{/ifError}>Category</span></label>
+		</li>
+		
+		<li>
+			<textarea rows="6" cols="80" name="content">${flash.content}</textarea>
+			
+			#{ifError 'content'}<br /><span class="error">The post content is empty.</span><br /><br />#{/ifError} 
 		</li>
 		<li>
 			<input type="submit" value="Submit me" />

@@ -5,10 +5,10 @@
 # Home page
 GET     /                                       Blog.all
 GET		/blog									Blog.all
-GET		/development							Blog.category(categoryId:'1')
-GET		/miscellaneous							Blog.category(categoryId:'2')
+GET		/development							Blog.category(name:'Development')
+GET		/miscellaneous							Blog.category(name:'Miscellaneous')
 GET		/category/{categoryId}					Blog.category
-GET		/blog/{title}							Blog.showPost
+GET		/blog/{url}								Blog.showPost
 GET		/blog/admin/write						Blog.showWriteForm
 POST	/blog/admin/insert						Blog.insert
 

@@ -32,5 +32,10 @@ public class Category extends Model {
 	public static Category get(long id) {
 		return all().filter("id", id).get();
 	}
+
+	public static Category getByName(String name) {
+		System.out.println(name);
+		return all().filter("name", name).get();
+	}
 	
 }
