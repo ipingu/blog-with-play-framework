@@ -5,11 +5,7 @@ import java.util.List;
 import models.Category;
 import models.Post;
 import play.Logger;
-import play.data.validation.Required;
-import play.data.validation.Validation;
 import play.mvc.Controller;
-import siena.Model;
-import siena.Query;
 
 public class Blog extends Controller {
 
@@ -30,7 +26,7 @@ public class Blog extends Controller {
 		Category category = Category.getByName(name);
 		
 		if (category != null) {
-			List<Post> postsFromCategory = Post.all().filter("category", category).fetch();
+			List<Post> postsFromCategory = Post.find("byCategory", category).fetch();
 			renderArgs.put("posts", postsFromCategory);
 			
 			render("Blog/all.html");
@@ -62,7 +58,7 @@ public class Blog extends Controller {
 		validation.required(title);
 		validation.required(content);
 		
-		Category cat = Category.get(Long.parseLong(category));
+		Category cat = Category.findById(Long.parseLong(category));
 		validation.required(cat);
 		
 		if (validation.hasErrors()) {

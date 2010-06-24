@@ -1,41 +1,31 @@
 package models;
 
-import siena.Filter;
-import siena.Id;
-import siena.Max;
-import siena.Model;
-import siena.NotNull;
-import siena.Query;
-import siena.Table;
+import java.util.List;
 
-@Table("categories")
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import play.db.jpa.Model;
+
+@Entity(name="categories")
 public class Category extends Model {
 
 	@Id
 	public Long id;
 	
-	@NotNull @Max(100)
 	public String name;
 	
-	@Filter("category")
-	public Query<Post> posts;
+	@OneToMany
+	public List<Post> posts;
 	
 	@Override
 	public String toString() {
 		return name;
 	}
-	
-	public static Query<Category> all() {
-		return Model.all(Category.class);
-	}
-	
-	public static Category get(long id) {
-		return all().filter("id", id).get();
-	}
 
 	public static Category getByName(String name) {
-		System.out.println(name);
-		return all().filter("name", name).get();
+		return find("byName", name).first();
 	}
 	
 }

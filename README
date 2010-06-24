@@ -52,7 +52,28 @@ This command will launch the server environment, and deploy your app on it. By d
 
 x play run
 
+Ok ! We now have a working development and execution environment, time has come to finally customize our application ! Next step is to use the design layer we have build when we were learning HTML 5.
+
+First, take a look at app/views/Application/index.html. We are gonna tweak this file.
+
+Play templates supports inheritance and inclusion: it allows to separate content in multiple files for the sake of clarity and reusability. Typically, a webpage could be divided in four parts (at least in our example) :
+ - a header -> header.html
+ - a footer -> footer.html
+ - a sidebar -> sidebar.html
+ - a content area -> content.html
+
+Each part will be a distinct template, and a root template (main.html) will compose our four templates. The template tag #{include 'name.html' /} is used for template inclusion.
+
+In main.html, there is special tag : {doLayout /}. When used, this tag allows inheritance. Each template which inherits main.html will have its content display in place of the doLayout tag. To inherit a template, use #{extends 'main.html' /} at the top of the template file.
+
+For an exhaustive list of existing tags, take a look at http://www.playframework.org/documentation/1.0.3/tags. And for what you can do in Java in templates files, it is @ http://www.playframework.org/documentation/1.0.3/javaextensions.
+
+The design is now basically integrated, it is sufficient for now. You will discover more on templates development in next lines.
+
+
 Next target ? Google App Engine. How to deploy a fresh Play! application on GAE and use the datastore engine ?
+
+----
 
 Many modules are available for Play! framework to enhance its abilities. Fortunately, module for deploying on GAE exists and you will see it is very easy and handy to benefits of GAE cloud.
 
@@ -112,25 +133,6 @@ Time to commit !
 
 git add war/WEB-INF/appengine-web.xml
 git commit -m "deployment on GAE works"
-
-
-Ok ! We now have a working development and execution environment, time has come to finally customize our application ! Next step is to use the design layer we have build when we were learning HTML 5.
-
-First, take a look at app/views/Application/index.html. We are gonna tweak this file.
-
-Play templates supports inheritance and inclusion: it allows to separate content in multiple files for the sake of clarity and reusability. Typically, a webpage could be divided in four parts (at least in our example) :
- - a header -> header.html
- - a footer -> footer.html
- - a sidebar -> sidebar.html
- - a content area -> content.html
-
-Each part will be a distinct template, and a root template (main.html) will compose our four templates. The template tag #{include 'name.html' /} is used for template inclusion.
-
-In main.html, there is special tag : {doLayout /}. When used, this tag allows inheritance. Each template which inherits main.html will have its content display in place of the doLayout tag. To inherit a template, use #{extends 'main.html' /} at the top of the template file.
-
-For an exhaustive list of existing tags, take a look at http://www.playframework.org/documentation/1.0.3/tags. And for what you can do in Java in templates files, it is @ http://www.playframework.org/documentation/1.0.3/javaextensions.
-
-The design is now basically integrated, it is sufficient for now. You will discover more on templates development in next lines.
 
 Time has come to start Java development : the first module we are gonna build is the post & comments functionnality. It will be really easy as you will see. As I planned to use Disqus.com to manage comments, I just want a system to manage categories and posts.
 

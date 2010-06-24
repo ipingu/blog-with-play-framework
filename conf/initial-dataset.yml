@@ -1,10 +1,20 @@
 Category(1):
- name: development
+ name: Development
 
 Category(2):
- name: miscellaneous
+ name: Miscellaneous
 
 Post(1):
  title: Hello World !
  category: 1
+ content: Lorem Ipsum
+ 
+Post(2):
+ title: Don't repeat yourself
+ category: 1
+ content: Lorem Ipsum
+ 
+Post(3):
+ title: My burger is cold
+ category: 2
  content: Lorem Ipsum

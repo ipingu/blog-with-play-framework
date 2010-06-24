@@ -3,45 +3,30 @@ package models;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-import siena.Generator;
-import siena.Id;
-import siena.Max;
-import siena.Model;
-import siena.NotNull;
-import siena.Query;
-import siena.Table;
-import siena.Time;
+import play.db.jpa.Model;
 
-@Table("posts")
+@Entity(name="posts")
 public class Post extends Model {
 
-	@Id(Generator.AUTO_INCREMENT)
+	@Id()
 	public Long id;
 	
+	@ManyToOne
 	public Category category;
 	
-	@NotNull @Time
 	public Date postedAt;
 	
-	@NotNull @Max(255)
 	public String title;
 	
-	@NotNull @Max(0)
+	@Lob
 	public String content;
-
-	public static Query<Post> all() {
-		return Model.all(Post.class);
-	}
-	
-	public static int count() {
-		return Post.all().count();
-	}
-	
-	public static Post getById(Long id) {
-		return all().filter("id", id).get();
-	}
-	
+		
 	/**
 	 * Returns a post by its slugified title.
 	 * 
@@ -56,7 +41,7 @@ public class Post extends Model {
 		}
 		
 		String id = title.substring(tokenIndex + 1, title.length());
-		return Post.getById(Long.parseLong(id));
+		return Post.findById(Long.parseLong(id));
 	}
 	
 	public static Post insertPost(String title, String content, Category category) {
@@ -64,7 +49,7 @@ public class Post extends Model {
 		post.title = title;
 		post.content = content;
 		post.category = category;
-		post.insert();
+		post.save();
 		
 		return post;
 	}
